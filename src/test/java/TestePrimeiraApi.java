@@ -1,4 +1,5 @@
 import io.restassured.RestAssured;
+import io.restassured.response.ValidatableResponse;
 import org.apache.http.Header;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -37,6 +38,23 @@ public class TestePrimeiraApi {
                 .assertThat()
                 .statusCode(200)
                 .body(Matchers.containsString(textoQueryParam));
+    }
+
+    @Test
+    public void exercicio03_TestePathParamPrimeiraApi() {
+
+        String textPathParam = "QA Academy";
+        String url = "http://localhost:8080/api/primeiraApiV2/"+textPathParam;
+
+        RestAssured.given()
+                .log().all()
+                .when()
+                .get(url)
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200)
+                .body(Matchers.containsString(textPathParam));
     }
 
 
