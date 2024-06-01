@@ -11,7 +11,7 @@ public class TesteExercicios {
         String msgResponseBody = "O numero 2 é par";
 
         RestAssured.given()
-                .queryParam("numero",2)
+                .queryParam("numero", 2)
                 .log().all()
                 .when()
                 .get(url)
@@ -26,7 +26,7 @@ public class TesteExercicios {
     public void exercicio05_TesteParOuImpar() {
 
         String pathParamSalario = "3000";
-        String url = "http://localhost:8080/exercicios/calculaSalario/"+pathParamSalario;
+        String url = "http://localhost:8080/exercicios/calculaSalario/" + pathParamSalario;
 
         RestAssured.given()
                 .log().all()
@@ -38,4 +38,25 @@ public class TesteExercicios {
                 .statusCode(200)
                 .body(Matchers.containsString("Salario liquido = 2050.65"));
     }
+
+    @Test
+    public void exercicio06_TesteCpf() {
+
+        String pathParamSalario = "3000";
+        String url = "http://localhost:8080/exercicios/validarCpf";
+
+        String cpf = "76734533042";
+
+        RestAssured.given()
+                .log().all()
+                .queryParam("cpf", cpf)
+                .when()
+                .get(url)
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200)
+                .body(Matchers.equalTo("CPF Valido"));
+    }
+
 }
