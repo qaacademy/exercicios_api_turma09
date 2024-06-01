@@ -1,60 +1,69 @@
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.RequestSpecification;
 import org.apache.http.Header;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
 
 public class TestePrimeiraApi {
+    String url = "http://localhost:8080/api";
+    RequestSpecification requestSpecification = new RequestSpecBuilder().setBaseUri(url).build();
 
     @Test
     public void exercicio01_TesteComSucessoPrimeiraApi() {
 
-        String url = "http://localhost:8080/api/primeiraApi";
+        String path = "/primeiraApi";
 
-        RestAssured.given()
+        given()
+                .spec(requestSpecification)
                 .log().all()
                 .when()
-                .get(url)
+                .get(path)
                 .then()
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body(Matchers.containsString("Retorno da api com sucesso!!!"));
+                .body(containsString("Retorno da api com sucesso!!!"));
     }
 
     @Test
     public void exercicio02_TesteQueryParamPrimeiraApi() {
 
-        String url = "http://localhost:8080/api/primeiraApiV1";
+        String path = "/primeiraApiV1";
         String textoQueryParam = "QA Academy";
 
-        RestAssured.given()
-                .queryParam("palavra",textoQueryParam)
+        given()
+                .spec(requestSpecification)
+                .queryParam("palavra", textoQueryParam)
                 .log().all()
                 .when()
-                .get(url)
+                .get(path)
                 .then()
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body(Matchers.containsString(textoQueryParam));
+                .body(containsString(textoQueryParam));
     }
 
     @Test
     public void exercicio03_TestePathParamPrimeiraApi() {
 
         String textPathParam = "QA Academy";
-        String url = "http://localhost:8080/api/primeiraApiV2/"+textPathParam;
+        String path = "/primeiraApiV2/" + textPathParam;
 
-        RestAssured.given()
+        given()
+                .spec(requestSpecification)
                 .log().all()
                 .when()
-                .get(url)
+                .get(path)
                 .then()
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body(Matchers.containsString(textPathParam));
+                .body(containsString(textPathParam));
     }
 
 
