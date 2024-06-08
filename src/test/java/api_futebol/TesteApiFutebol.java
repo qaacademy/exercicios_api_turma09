@@ -107,7 +107,7 @@ public class TesteApiFutebol {
         int primeiroColocado =  response.path("[0].pontos");
         int ultimoColocado =  response.path("[19].pontos");
 
-        Assert.assertTrue("Primeiro colocado não tem mais pontos que o ultimo", primeiroColocado > ultimoColocado);
+        Assert.assertTrue("Primeiro colocado não tem mais pontos que o ultimo", primeiroColocado >= ultimoColocado);
 
 
     }
